@@ -2,13 +2,6 @@
 Rust Closure: Real Case
 
 
-
-
-Rust Language:
-
-Rust's aim is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
-
-
 Closures
 
 As Rust helps to do generics, let’s build some fully generic codes to understand some points in the very informative work "Finding Closure in Rust" . 
