@@ -69,7 +69,7 @@ impl<F,Input, Output1,Output2> ExecutionfunctionFn<Input> for F where F: Fn(Inpu
 fn main()
 {
 
-//  From generic types to some actual provides types by Rust!
+//  From generic types to some actual provided types by Rust!
 
   // a simple self-defined function, using mainly important element in Rust design as Result-Option.
  fn plus2(i: f64) -> Result<bool,Option<i32>>
