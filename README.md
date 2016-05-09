@@ -4,7 +4,7 @@ Rust Closure: Real Case
 
 Closures
 
-As Rust helps to do generics, let’s build some fully generic codes to understand some points in the very informative work "Finding Closure in Rust" . 
+As Rust helps to do generics, let’s build some fully generic codes to understand some points in the very informative work "Finding Closure in Rust", see http://huonw.github.io/blog/2015/05/finding-closure-in-rust/. 
 
 Almost certainly, rust helped to shape closures similar to C++11’s using trait concept. 
 
