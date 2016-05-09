@@ -1,0 +1,162 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> Distributed Hash Table in the Era of Internet of the Things </title>
+    <link rel="stylesheet" href="../Numerics/stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $('body').ready(function() {
+            // preload iframe with message
+            var iframe = document.getElementById('show');
+            var iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframedoc.body.innerHTML = ''
+                + '<br><br>'
+                + '<div style="text-align: center; color: #CCC; font-family: arial; font-size: 14px; font-weight:bold;">'
+                + 'Click the links above to load the example here'
+                + '</div>';
+
+            $('.showbases').click(function(evt){
+                evt.preventDefault();
+                evt.stopPropagation();
+                $(evt.target).fadeOut();
+                $('.chartlinks').stop().slideUp({complete: function() {
+                    $('.showcharts').fadeIn();
+                    $('.baselinks').slideDown();
+                }});
+            });
+            $('.showcharts').click(function(evt){
+                evt.preventDefault();
+                evt.stopPropagation();
+                $(evt.target).fadeOut();
+                $('.baselinks').stop().slideUp({complete: function() {
+                    $('.showbases').fadeIn();
+                    $('.chartlinks').slideDown();
+                }});
+            });
+            $('.examplelinks a').each(function(i, elem) {
+                $(elem).click(function(evt) {
+                    $('#show').prop('src', $(evt.target).prop('href'));
+                    evt.stopPropagation();
+                    evt.preventDefault();
+                    $('.examplelinks a').removeClass('selected');
+                    $(evt.target).addClass('selected');
+                    // add link to source
+                    var urlparts = $(evt.target).prop('href').split('/');
+                    var file = urlparts[urlparts.length - 1];
+                    var sourceurl = 'https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/' + file;
+                    $('#tosource').prop('href', sourceurl).fadeIn();
+                    // also set link to view only the example
+                    $('#showonlythis').prop('href', $(evt.target).prop('href'));
+                    // done
+                    $('#example_options').attr('style', '');
+                    return false;
+                });
+            });
+        });
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+</head>
+<body>
+
+<header>
+    <body style="background-color:lightgrey;">
+    <h1 style="color:black"> Rust Language-Generics Essentials</h1>
+  <div>
+    <a target="alone"  href="https://github.com/efaysal" style="color:black"> Author: Faysal.El.Khettabi@gmail.com </a>
+     </div> 
+</header>
+
+
+
+<div class="wrapper">
+    <nav>
+        <ul></ul>
+    </nav>
+    <section>
+
+<h5>Rust Language:</h5>
+<blockquote>
+<a target="alone"  href="https://www.rust-lang.org/" style="color:black">Rust's aim </a> 
+is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety. 
+</blockquote>
+
+<br><br>
+<h2>
+Closures  
+</h2>
+
+As Rust helps to do generics, let’s build some fully generic codes to understand some points in the very informative work 
+<a target="alone"  href="http://huonw.github.io/blog/2015/05/finding-closure-in-rust/"> "Finding Closure in Rust" </a>.
+  
+<br><br>
+Almost certainly, rust helped to shape closures similar to C++11’s using trait concept.
+<br><br>
+Three fundamental traits for closures are used to generate closures. When the call method uses:
+<br><br>
+1) &self among its arguments, it's a Fn. <br>
+2) &mut self among its arguments, it's a FnMut.<br>
+3) self among its arguments, it's a FnOnce.
+<br><br>
+
+This is clearly covering the definition of a closure: "closure is a function that can directly use variables from the scope in which it is defined, its external-environment". 
+<br><br>
+A fourth point is not fully clarified for a kind of closure that is  only aware about its internal-environment, any function defined by "fn" is fully operating only on its internal arguments, no need to know that much  about the external-environment to do the job. 
+<br><br>
+Let's call this function defined by the key "fn" as self-defined.
+<br><br>
+When testing simple codes, I observed that any self-defined function is considered by the compiler as Fn, FnMut and FnOnce. 
+<br><br>
+The current Rust compiler enables the self-defined function to enjoy the Trinity. 
+<br><br>
+
+Simple questions:
+<br><br>
+What is the doctrine of this Trinity? 
+<br><br>
+Is the current Rust compilation Trinity contradictory to any idioms?
+<br><br>
+
+Let's have a workaround, we need a concrete and useful case, let's explore a specific case where the power of Rust generic is used.
+
+<br><br>
+Using closure in Remote Procedure Calls (RPC) is basically or naturally  motived by the main point of RPC: a client  asks a server to process a request, the server will process  the function associated to that request  (closure ) to return the suitable response if any. Closures are very suitable for this kind of task. 
+<br><br>
+
+We defined, generically, 3 kind of call-execution methods, one using only Fn closure ( having the marker Fn ), second using FnMut closure and the third using only FnOnce closure. We used the same name in the tree call-execution methods, "execution".
+The current Rust compiler passed all of them without a single warning signs. 
+<br><br>
+So which one the current Rust compiler will infer from these 3 calls at run time? 
+<br><br>
+
+When our code has all the closures, Fn*, and when "execute" used a self-defined function as argument, 
+Rust system at run time used:
+<br><br>
+-) The execution function defined by FnOnce, ( I expected actually the one defined by Fn.)
+
+<br><br>
+
+I kept only Fn and FnMut in the code ( I removed any thing related to FnOnce ) , when "execute" used a self-defined function as argument, Rust system at run time used in this case: 
+
+<br><br>
+-) The execution function defined by Fn.
+
+<br><br>
+
+Any interpretation of this behavior?
+
+<br><br>
+<p>The Codes are in:<p>
+
+<a href="/Rust/Rustefncodes" >  Codes </a>
+
+
+ </section>
+</div>
+
+</body>
+</html>
